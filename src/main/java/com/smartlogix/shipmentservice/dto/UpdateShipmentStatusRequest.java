@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 @Setter
 @NoArgsConstructor
 public class UpdateShipmentStatusRequest {
-    private String newStatus; //"pendiente" | "en_transito" | "entregado"
+    private String newStatus; //"en_transito" | "entregado"
 }
 

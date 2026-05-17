@@ -1,13 +1,13 @@
-package com.smartlogix.shippingservice;
+package com.smartlogix.shipmentservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ShippingserviceApplication {
+public class ShipmentserviceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ShippingserviceApplication.class, args);
+		SpringApplication.run(ShipmentserviceApplication.class, args);
 	}
 
 }

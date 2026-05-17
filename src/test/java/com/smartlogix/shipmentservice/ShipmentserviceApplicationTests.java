@@ -1,10 +1,10 @@
-package com.smartlogix.shippingservice;
+package com.smartlogix.shipmentservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ShippingserviceApplicationTests {
+class ShipmentserviceApplicationTests {
 
 	@Test
 	void contextLoads() {

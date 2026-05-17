@@ -90,7 +90,7 @@ public class ShipmentService {
 
     //Calls ORDERSERVICE's PUT /api/orders/status
     private void notifyOrderService(Long orderId, String newOrderStatus) {
-        String url = orderServiceUrl + "/api/orders/status";
+        String url = orderServiceUrl + "/orders/status";
 
         Map<String, Object> body = Map.of(
                 "orderId", orderId,

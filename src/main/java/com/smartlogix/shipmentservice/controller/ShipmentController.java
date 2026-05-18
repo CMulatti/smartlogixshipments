@@ -33,11 +33,15 @@ public class ShipmentController {
         return ResponseEntity.ok(shipmentService.getShipmentByOrderId(orderId));
     }
 
-    // POST /shipments  called by ORDERSERVICE automatically when an order is created
-    @PostMapping
-    public ResponseEntity<Shipment> createShipment(@RequestBody CreateShipmentRequest request) {
-        return ResponseEntity.ok(shipmentService.createShipment(request));
-    }
+    //-----------------replaced with Kafka -------------------------------------------------------------
+//    // POST /shipments  called by ORDERSERVICE automatically when an order is created
+//    @PostMapping
+//    public ResponseEntity<Shipment> createShipment(@RequestBody CreateShipmentRequest request) {
+//        return ResponseEntity.ok(shipmentService.createShipment(request));
+//    }
+    //---------------------------------------------------------------------------------------------------
+    //Shipments are created internally by the Kafka listener (KafkaConsumerService) when an "order-created" event arrives.
+
 
     // "change status" button on admin simulation board on frontend. (from "pendiente" to new status: en_transito  | entregafo)
     // PUT shipments/{id}/status

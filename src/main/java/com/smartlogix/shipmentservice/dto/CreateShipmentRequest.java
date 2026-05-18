@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 
-/**Used when ORDERSERVICE creates a new shipment for an order. Example JSON:
+/**Used when ORDERSERVICE tells SHIPMENTSERVICE to create a new shipment for an order. Example JSON:
  * {
  *   "orderId": 6,
  *   "shippingCompany": "DHL",

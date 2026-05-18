@@ -95,6 +95,13 @@
 			<version>2.2.0</version>
 		</dependency>
 
+		<!-- Kafka — lets us listen to messages from a Kafka topic -->
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
+		</dependency>
+
+
 
 
 	</dependencies>

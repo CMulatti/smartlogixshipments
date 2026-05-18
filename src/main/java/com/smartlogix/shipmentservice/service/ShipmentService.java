@@ -88,7 +88,7 @@ public class ShipmentService {
         };
     }
 
-    //Calls ORDERSERVICE's PUT /api/orders/status
+    //Calls ORDERSERVICE: PUT orders/status
     private void notifyOrderService(Long orderId, String newOrderStatus) {
         String url = orderServiceUrl + "/orders/status";
 
@@ -100,7 +100,7 @@ public class ShipmentService {
         try {
             restTemplate.put(url, body); //this replaces restTemplate.patchForObject
         } catch (Exception e) {
-            System.err.println("[ShipmentService] Failed to notify OrderService: " + e.getMessage());
+            System.err.println("[ShipmentService] falló en notificar a OrderService: " + e.getMessage());
         }
     }
 

@@ -6,6 +6,7 @@ import com.smartlogix.shipmentservice.entity.Shipment;
 import com.smartlogix.shipmentservice.repository.ShipmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -17,10 +18,13 @@ import java.util.Map;
 public class ShipmentService {
 
     private final ShipmentRepository shipmentRepository;
-    private final RestTemplate restTemplate;
+//    private final RestTemplate restTemplate;
+//
+//    @Value("${app.orderservice.url}")
+//    private String orderServiceUrl;
 
-    @Value("${app.orderservice.url}")
-    private String orderServiceUrl;
+    private final KafkaTemplate<String, String> kafkaTemplate;
+    private static final String SHIPMENT_STATUS_TOPIC = "shipment-status-changed";
 
     //-----------READ---------------------------
 
@@ -64,8 +68,11 @@ public class ShipmentService {
         Shipment shipment = getShipmentById(shipmentId);
 
         String newShipmentStatus = request.getNewStatus();
+        System.out.println("[ShipmentService] BEFORE save - status: " + shipment.getShipmentStatus());
         shipment.setShipmentStatus(newShipmentStatus);
+        System.out.println("[ShipmentService] AFTER set - status: " + shipment.getShipmentStatus());
         Shipment saved = shipmentRepository.save(shipment);
+        System.out.println("[ShipmentService] AFTER save - status: " + saved.getShipmentStatus());
 
         // Determine what order status maps to this shipment status
         String correspondingOrderStatus = mapShipmentStatusToOrderStatus(newShipmentStatus);
@@ -88,21 +95,38 @@ public class ShipmentService {
         };
     }
 
-    //Calls ORDERSERVICE: PUT orders/status
+//    //Calls ORDERSERVICE VIA REST: PUT orders/status
+//    private void notifyOrderService(Long orderId, String newOrderStatus) {
+//        String url = orderServiceUrl + "/orders/status";
+//
+//        Map<String, Object> body = Map.of(
+//                "orderId", orderId,
+//                "newOrderStatus", newOrderStatus
+//        );
+//
+//        try {
+//            restTemplate.put(url, body); //this replaces restTemplate.patchForObject
+//        } catch (Exception e) {
+//            System.err.println("[ShipmentService] falló en notificar a OrderService: " + e.getMessage());
+//        }
+//    }
+
     private void notifyOrderService(Long orderId, String newOrderStatus) {
-        String url = orderServiceUrl + "/orders/status";
-
-        Map<String, Object> body = Map.of(
-                "orderId", orderId,
-                "newOrderStatus", newOrderStatus
+        String eventJson = String.format(
+                "{\"orderId\":%d,\"newOrderStatus\":\"%s\"}",
+                orderId,
+                newOrderStatus
         );
-
-        try {
-            restTemplate.put(url, body); //this replaces restTemplate.patchForObject
-        } catch (Exception e) {
-            System.err.println("[ShipmentService] falló en notificar a OrderService: " + e.getMessage());
-        }
+        kafkaTemplate.send(SHIPMENT_STATUS_TOPIC, eventJson);
+        System.out.println("[ShipmentService] Event published to Kafka topic '"
+                + SHIPMENT_STATUS_TOPIC + "' for orderId: " + orderId);
     }
+
+
+
+
+
+
 
     //------------------ DELETE-----------------
     // simulating that for some reason the shipment company could not ship an order already given to them.

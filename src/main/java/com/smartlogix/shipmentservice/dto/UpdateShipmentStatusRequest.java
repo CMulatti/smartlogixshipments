@@ -1,3 +1,8 @@
+//incoming HTTP request from the frontend when admin clicks the status change button.
+// Contains just newStatus.
+// Used by ShipmentController → ShipmentService.updateShipmentStatus().
+//the frontend still calls this directly, it's the entry point for the whole status change flow.
+
 package com.smartlogix.shipmentservice.dto;
 
 import lombok.Getter;

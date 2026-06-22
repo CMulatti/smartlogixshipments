@@ -1,3 +1,6 @@
+//outgoing Kafka message published to the shipment-status-changed topic when the admin changes a shipment status.
+// OrderService reads this to update the corresponding order status.
+
 package com.smartlogix.shipmentservice.dto;
 
 import lombok.AllArgsConstructor;

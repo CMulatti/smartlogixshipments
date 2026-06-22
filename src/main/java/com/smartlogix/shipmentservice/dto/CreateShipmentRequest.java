@@ -1,3 +1,6 @@
+//internal DTO used to call shipmentService.createShipment().
+// KafkaConsumerService builds this from the OrderCreatedEvent data and passes it to the service layer.
+
 package com.smartlogix.shipmentservice.dto;
 
 import lombok.Getter;

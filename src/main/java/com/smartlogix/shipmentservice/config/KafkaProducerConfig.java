@@ -1,3 +1,5 @@
+//This class tells Spring how to create the objects that our application will use to send messages to Kafka.
+
 package com.smartlogix.shipmentservice.config;
 
 import org.apache.kafka.clients.producer.ProducerConfig;

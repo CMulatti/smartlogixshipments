@@ -1,3 +1,6 @@
+//incoming Kafka message received from OrderService when an order is created.
+// KafkaConsumerService reads this and creates a new shipment automatically.
+
 package com.smartlogix.shipmentservice.dto;
 
 import lombok.AllArgsConstructor;

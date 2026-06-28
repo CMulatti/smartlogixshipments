@@ -42,7 +42,7 @@ public class KafkaOrderCreatedConsumerTest {
     @Test
     void whenOrderCreatedEventReceived_shipmentIsCreated() throws InterruptedException {
 
-        Long testOrderId = 999L; //We use a unique id so we can find it after
+        Long testOrderId = System.currentTimeMillis(); //We use a unique id so we can find it after
 
         //Simulate OrderService publishing the order-created event
         //this is exactly the JSON that OrderService.createOrder() produces
@@ -59,6 +59,7 @@ public class KafkaOrderCreatedConsumerTest {
 
         // Check that a shipment was created for this order
         Optional<Shipment> shipment = shipmentRepository.findByOrderId(testOrderId);
+
 
         assertTrue(shipment.isPresent(),
                 "Shipment should have been created after order-created event");

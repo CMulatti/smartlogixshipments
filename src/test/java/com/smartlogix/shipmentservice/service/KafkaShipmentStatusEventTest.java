@@ -12,6 +12,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.stereotype.Component;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -30,6 +31,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 
 @SpringBootTest
+@ActiveProfiles("test")
 @EmbeddedKafka(
         partitions = 1,
         topics = {"shipment-status-changed", "order-created"},
